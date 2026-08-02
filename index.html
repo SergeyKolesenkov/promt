@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мультимедийный ИИ-Шаблонизатор</title>
+    <!-- Подключаем внешние стили -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>🚀 Мультимедийный Шаблонизатор</h1>
+    <div class="subtitle">Разработано по материалам Лекции №5 РАНХиГС для Kolesenkov.ru</div>
+    
+    <!-- Переключатель вкладок -->
+    <div class="tabs">
+        <button class="tab-btn active" id="tab-graphics" onclick="switchMode('graphics')">🎨 Графика</button>
+        <button class="tab-btn" id="tab-text" onclick="switchMode('text')">📝 Текст (RTFCO)</button>
+        <button class="tab-btn" id="tab-audio" onclick="switchMode('audio')">🎵 Звук</button>
+        <button class="tab-btn" id="tab-video" onclick="switchMode('video')">🎬 Видео</button>
+        <button class="tab-btn" id="tab-vibe" onclick="switchMode('vibe')">⚡ Вайб Кодинг</button>
+    </div>
+
+    <!-- 1. ПАНЕЛЬ ГРАФИКИ -->
+    <div id="graphicsPanel" class="mode-panel active">
+        <div class="template-preview">Анатомия: Нарисуй: {style}, {subject}, {camera}, {environment}.</div>
+        <div class="section-title">{subject} — Субъект (Что на картинке)</div>
+        <input type="text" id="gSubject" class="input-field" placeholder="Например: брутальный антропоморфный кот на байке с катаной за спиной" oninput="updatePrompt()">
+        <div class="section-title">{style} — Стиль и Медиа</div>
+        <input type="text" id="gStyle" class="input-field" placeholder="Например: фотореализм" oninput="updatePrompt()">
+        <div class="section-title">{camera} — Ракурс и Камера</div>
+        <select id="gCamera" class="select-field" onchange="updatePrompt()">
+            <option value="вид строго спереди (front view)" selected>Вид строго спереди</option>
+            <option value="ракурс вполоборота (three-quarter view)">Вполоборота (3/4)</option>
+            <option value="вид строго сбоку (profile view)">Вид строго сбоку (Профиль)</option>
+            <option value="крупный план (close-up shot)">Крупный план (Макро)</option>
+        </select>
+        <div class="section-title">{environment} — Среда и Окружение</div>
+        <input type="text" id="gEnv" class="input-field" placeholder="Например: на фоне заката над футуристичным городом" oninput="updatePrompt()">
+        
+        <div class="section-title">🛠️ Модификаторы качества графики</div>
+        <div class="checkbox-grid">
+            <label class="checkbox-label"><input type="checkbox" id="qDetailed" onchange="updatePrompt()"><span>highly detailed</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="qFocus" onchange="updatePrompt()"><span>sharp focus</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="qResolution" onchange="updatePrompt()"><span>8k resolution</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="qPhoto" onchange="updatePrompt()"><span>photorealistic</span></label>
+        </div>
+    </div>
+
+    <!-- 2. ПАНЕЛЬ ТЕКСТА -->
+    <div id="textPanel" class="mode-panel">
+        <div class="template-preview">Формула RTFCO: {role}. Задача: {task}. Целевая аудитория: {audience}. Формат: {format}.</div>
+        <div class="section-title">{role} — Роль ИИ</div>
+        <input type="text" id="tRole" class="input-field" placeholder="Например: Ты — опытный Копирайтер" oninput="updatePrompt()">
+        <div class="section-title">{task} — Задача и контекст</div>
+        <input type="text" id="tTask" class="input-field" placeholder="Например: Напиши описание наушников для маркетплейса" oninput="updatePrompt()">
+        <div class="section-title">{audience} — Целевая аудитория</div>
+        <input type="text" id="tAudience" class="input-field" placeholder="Например: молодые меломаны, ценящие качественный звук" oninput="updatePrompt()">
+        <div class="section-title">{format} — Формат вывода</div>
+        <input type="text" id="tFormat" class="input-field" placeholder="Например: пост для Telegram с эмодзи" oninput="updatePrompt()">
+    </div>
+
+    <!-- 3. ПАНЕЛЬ ЗВУКА -->
+    <div id="audioPanel" class="mode-panel">
+        <div class="template-preview">Структура Suno/Udio: Audio Prompt: {genre}, {mood}, {vocals}.</div>
+        <div class="section-title">{genre} — Жанр и Эпоха</div>
+        <input type="text" id="aGenre" class="input-field" placeholder="Например: indie synth-pop, 1980s retro wave" oninput="updatePrompt()">
+        <div class="section-title">{mood} — Темп и Настроение</div>
+        <input type="text" id="aMood" class="input-field" placeholder="Например: 120 BPM, optimistic mood" oninput="updatePrompt()">
+        <div class="section-title">{vocals} — Вокал</div>
+        <input type="text" id="aVocals" class="input-field" placeholder="Например: female vocals, breathy and clear" oninput="updatePrompt()">
+    </div>
+
+    <!-- 4. ПАНЕЛЬ ВИДЕО -->
+    <div id="videoPanel" class="mode-panel">
+        <div class="template-preview">Структура Runway: Video Prompt: {action}, {camera_motion}.</div>
+        <div class="section-title">{action} — Стартовый кадр и движение субъекта</div>
+        <input type="text" id="vAction" class="input-field" placeholder="Например: антропоморфный кот медленно смотрит в камеру" oninput="updatePrompt()">
+        <div class="section-title">{camera_motion} — Движение камеры</div>
+        <input type="text" id="vCamera" class="input-field" placeholder="Например: Cinematic drone shot, slowly flying forward" oninput="updatePrompt()">
+        
+        <div class="section-title">🎬 Модификаторы качества видео</div>
+        <div class="checkbox-grid">
+            <label class="checkbox-label"><input type="checkbox" id="vWarm" onchange="updatePrompt()"><span>warm lighting</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="vCinematic" onchange="updatePrompt()"><span>cinematic</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="v4k" onchange="updatePrompt()"><span>4k</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="v24fps" onchange="updatePrompt()"><span>24fps</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="vPhoto" onchange="updatePrompt()"><span>photorealistic</span></label>
+        </div>
+    </div>
+
+    <!-- 5. ПАНЕЛЬ ВАЙБ КОДИНГА -->
+    <div id="vibePanel" class="mode-panel">
+        <div class="template-preview">Концепция: Описание логики проекта для генерации ИИ-моделями без ручного написания кода.</div>
+        <div class="section-title">{app_goal} — Главная цель приложения</div>
+        <input type="text" id="viGoal" class="input-field" placeholder="Например: Интерактивный калькулятор стоимости доставки" oninput="updatePrompt()">
+        <div class="section-title">{tech_stack} — Технологический стек</div>
+        <input type="text" id="viStack" class="input-field" placeholder="Например: Чистый HTML, CSS и JavaScript без фреймворков" oninput="updatePrompt()">
+        <div class="section-title">{features} — Ключевые функции (через запятую)</div>
+        <input type="text" id="viFeatures" class="input-field" placeholder="Например: ползунок выбора веса, автоматический подсчет цены, кнопка сброса" oninput="updatePrompt()">
+    </div>
+
+    <!-- ОКНО ВЫВОДА -->
+    <div class="section-title">🚀 Сгенерированный системный промт:</div>
+    <div class="result-box" id="resultPrompt">Заполните поля...</div>
+    
+    <button class="copy-btn" onclick="copyToClipboard()">Скопировать промт в буфер</button>
+</div>
+
+<!-- Подключаем нашу внешнюю логику -->
+<script src="app.js"></script>
+</body>
+</html>
