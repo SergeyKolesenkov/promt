@@ -74,7 +74,27 @@ function copyToClipboard() {
         alert('Промт скопирован в буфер обмена!');
     }).catch(err => alert('Ошибка при копировании: ' + err));
 }
+async function translatePrompt() {
+  const rBox = document.getElementById('resultPrompt');
+  if (!rBox) return;
 
+  let text = rBox.innerText.trim();
+  if (!text) {
+    alert('Нет текста для перевода');
+    return;
+  }
+
+  try {
+    // Сначала копируем текст в буфер обмена
+    await navigator.clipboard.writeText(text);
+    
+    // Открываем Google со вставленным текстом
+    const url = `https://translate.google.com/?sl=auto&tl=en&text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  } catch (err) {
+    alert('Ошибка: ' + err);
+  }
+}
 // Инициализация при старте
 window.onload = function() {
     updatePrompt();
