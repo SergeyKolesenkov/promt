@@ -9,16 +9,16 @@
 </head>
 <body>
 <div class="container">
-    <h1>🚀 Мультимедийный Шаблонизатор</h1>
+    <h1>🚀 Мультимедийный Шаблон для промтов</h1>
     <div class="subtitle">Разработано по материалам Лекции №5 РАНХиГС для Kolesenkov.ru</div>
     
     <!-- Переключатель вкладок -->
     <div class="tabs">
-        <button class="tab-btn active" id="tab-graphics" onclick="switchMode('graphics')">🎨 Графика</button>
-        <button class="tab-btn" id="tab-text" onclick="switchMode('text')">📝 Текст (RTFCO)</button>
-        <button class="tab-btn" id="tab-audio" onclick="switchMode('audio')">🎵 Звук</button>
-        <button class="tab-btn" id="tab-video" onclick="switchMode('video')">🎬 Видео</button>
-        <button class="tab-btn" id="tab-vibe" onclick="switchMode('vibe')">⚡ Вайб Кодинг</button>
+        <button class="tab-btn active" id="tab-graphics" onclick="switchMode('graphics')">🎨Графика</button>
+        <button class="tab-btn" id="tab-text" onclick="switchMode('text')">📝Текст</button>
+        <button class="tab-btn" id="tab-audio" onclick="switchMode('audio')">🎵Звук</button>
+        <button class="tab-btn" id="tab-video" onclick="switchMode('video')">🎬Видео</button>
+        <button class="tab-btn" id="tab-vibe" onclick="switchMode('vibe')">⚡Кодинг</button>
     </div>
 
     <!-- 1. ПАНЕЛЬ ГРАФИКИ -->
@@ -103,7 +103,7 @@
     <!-- ОКНО ВЫВОДА -->
     <div class="section-title">🚀 Сгенерированный системный промт:</div>
     <div class="result-box" id="resultPrompt">Заполните поля...</div>
-    <button class="copy-btn" class="matrix-btn" onclick="translatePrompt()"> ПЕРЕВЕСТИ НА АНГЛИЙСКИЙ </button>
+    <button class="copy-btn" onclick="translatePrompt()"> ПЕРЕВЕСТИ НА АНГЛИЙСКИЙ </button>
 
     <button class="copy-btn" onclick="copyToClipboard()">Скопировать промт в буфер</button>
 </div>
